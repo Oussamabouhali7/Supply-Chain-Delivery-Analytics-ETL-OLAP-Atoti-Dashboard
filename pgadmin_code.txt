@@ -1,0 +1,48 @@
+drop schema if exists "Livraison" cascade;
+create schema "Livraison";
+set search_path to "Livraison";
+
+-- table Dimensions
+create table Fournisseur(
+   id_fournisseur varchar,
+   NomFournisseur varchar,
+   AddressFournisseur varchar  
+);
+create table Temps(
+   id_temps varchar,
+   DateLivraison varchar,
+   TempsLivraison varchar
+);
+
+create table Chemin(
+   id_chemin varchar,
+   id_pays varchar,
+   nom_pays varchar,
+   id_paysLivraison varchar,
+   nom_paysLivraison varchar
+);
+
+-- table Fait
+create table Livraison(
+   qte int,
+   prix_commande float,
+   id_fournisseur varchar,
+   id_temps varchar, 
+   id_chemin varchar
+);
+
+-- primary keys
+ alter table Fournisseur add primary key(id_fournisseur);
+ alter table Temps add primary key(id_temps);
+ alter table Chemin add primary key(id_chemin);
+ alter table Livraison add primary key(id_fournisseur, id_temps, id_chemin);
+
+
+-- foreign keys
+ alter table Livraison add foreign key(id_fournisseur) references Fournisseur,
+  add foreign key(id_temps) references Temps,
+  add foreign key(id_chemin) references Chemin;
+  
+
+
+commit;
